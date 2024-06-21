@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "List of Products";
+}
+
+<div class="">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 col-sm-6 mb-3">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="card-title d-flex justify-content-between align-items-center">
+                            @item.Name
+                            <a class="text-white" asp-action="Edit" asp-controller="Products" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                        </h5>
+                    </div>
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <img src="@item.ImageUrl" class="img-fluid" alt="@item.Name">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <p class="card-text"><b>Product Name: </b>@item.Name</p>
+                                <p class="card-text"><b>Price: </b>@item.Price.ToString("C")</p>
+                                <p class="card-text">@item.Discription</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a class="btn btn-outline-primary" asp-action="Details" asp-controller="Products" asp-route-id="@item.Id">
+                                <i class="bi bi-eye-fill"></i> Show Details
+                            </a>
+                            <a class="btn btn-success text-white" asp-controller="Orders" asp-action="AddItemToShoppingCart" asp-route-id="@item.Id">
+                                <i class="bi bi-cart-plus"></i> Add to Cart (Price @item.Price.ToString("C"))
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div class="floating-button">
+    <a asp-action="Create" asp-controller="Products" class="btn btn-primary btn-lg">
+        <i class="bi bi-plus"></i> Create New Product
+    </a>
+</div>
+
+<style>
+    .floating-button {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1000; /* Ensure it's above other content */
+    }
+
+    .card {
+        margin-bottom: 20px; /* Add margin between cards */
+    }
+</style>
